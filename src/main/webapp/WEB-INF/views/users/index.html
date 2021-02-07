@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>My app</title>
+</head>
+
+<body>
+<p>index Page</p>
+
+<div th:each ="user :${users}">
+       <a th:href="@{/users/{id}(id= ${user.getId()})}"
+          th:text="${user}">user</a>
+
+</div>
+
+<p th:text="${data}"/>
+
+<br><hr>
+<a href="/users/new">Create new User</a>
+
+</body>
+
+</html>

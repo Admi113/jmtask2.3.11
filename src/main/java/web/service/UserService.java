@@ -1,12 +1,29 @@
 package web.service;
 
-import web.model.User;
+import web.models.User;
+
+import java.util.List;
 
 public interface UserService {
 
     void delete(User user);
-    void add(User user);
-    void edit(User user);
+    void save(User user);
+    void update(User user,int id);
     User getById(int id);
+
+
+
+
+
+
+
+
+    List<User> getAllUsers();
+
+
+
+
+
+
 
 }
