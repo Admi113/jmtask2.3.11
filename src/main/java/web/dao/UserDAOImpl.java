@@ -37,18 +37,20 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void update(User user, int id) {
-        user = getById(id);
-        edit(user);
-    }
-
-    @Override
-    public void edit(User u) {
-        em.merge(u);
+       User user1 = getById(id);
 
     }
 
     @Override
-    public void delete(User user) {
+    public void edit(User user) {
+        em.merge(user);
+
+    }
+
+
+    @Override
+    public void delete(int id) {
+        User user = getById(id);
         em.remove(user);
     }
 
