@@ -10,16 +10,20 @@ import web.models.User;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Component
+@Repository
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDAO userDAO = new UserDAOImpl();
+//    @Autowired
+//    public void setUserDAO(UserDAO userDAO) {
+//        this.userDAO = userDAO;
+//    }
 
     @Transactional
     @Override
-    public void delete(User user) {
-        userDAO.delete(user);
+    public void delete(int id) {
+        userDAO.delete(id);
     }
 
     @Transactional
@@ -31,7 +35,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void update(User user, int id) {
-        userDAO.update(user, id);
+        User userToChange = userDAO.getById(id);
+        userToChange.setAge(user.getAge());
+        userToChange.setName(user.getName());
+        userToChange.setSurname(user.getSurname());
     }
 
     @Transactional

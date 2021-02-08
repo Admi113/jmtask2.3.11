@@ -15,12 +15,13 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
+    @Autowired
     UserServiceImpl userService;
 
-    @Autowired
-    public UsersController(UserServiceImpl userService) {
-        this.userService = userService;
-    }
+//    @Autowired
+//    public UsersController(UserServiceImpl userService) {
+//        this.userService = userService;
+//    }
 
     @GetMapping()
     public String index(Model model) {
@@ -72,7 +73,7 @@ public class UsersController {
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        userService.delete(userService.getById(id));
+        userService.delete(id);
         return "redirect:/users";
     }
 

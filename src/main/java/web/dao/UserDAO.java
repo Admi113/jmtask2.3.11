@@ -8,9 +8,9 @@ import java.util.List;
 public interface UserDAO {
 
 
-    void edit(User u);
+//    void edit(User u);
 
-    void delete(User user);
+    void delete(int id);
 
     User getById(int id);
 
@@ -20,7 +20,7 @@ public interface UserDAO {
     void save(User user);
 
 
-    void update(User user, int id);
+//    void update(User user, int id);
 
 
 }

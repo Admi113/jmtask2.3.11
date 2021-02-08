@@ -1,6 +1,9 @@
 package web.dao;
 
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Repository;
@@ -8,60 +11,57 @@ import web.models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
     @Autowired
-    EntityManagerFactory entityManagerFactory;
-
-    EntityManager em;
+    SessionFactory sessionFactory;
+//    EntityManager em;
 
 
     @Override
-    public void save(User u) {
-        em.persist(u);
+    public void save(User user) {
+        sessionFactory.getCurrentSession().save(user);
     }
 
-    @Override
-    public void update(User user, int id) {
-        user = getById(id);
-        edit(user);
-    }
+//    @Override
+//    public void update(User user, int id) {
+//        user = getById(id);
+//        edit(user);
+//    }
+
+//    @Override
+//    public void edit(User u) {
+//        em.merge(u);
+//
+//    }
 
     @Override
-    public void edit(User u) {
-        em.merge(u);
+    public void delete(int id) {
+//        em.remove(user);
 
-    }
-
-    @Override
-    public void delete(User user) {
-        em.remove(user);
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("delete from" +
+                " User where id= :id");
+        query.setParameter("id",id);
+        query.executeUpdate();
     }
 
     @Override
     public User getById(int id) {
-        return (User) em.find(User.class, id);
+        Session session= sessionFactory.getCurrentSession();
+        User user = session.get(User.class,id);
+        return user;
     }
 
     @Override
     public List<User> getAllUsers() {
 
-//        String sql = " FROM users_new";
-//        Query query = em.createQuery(sql);
-//
-//
-//        return em.createQuery("SELECT * FROM users_new").getResultList();
-
-       List<User> users = new ArrayList<>();
-        users.add(new User("name", "surname", 1,1));
-        users.add(new User("name", "surname", 3,2));
-        users.add(new User("name", "surname", 4,3));
-        users.add(new User("name", "surname", 5,4));
-       return users;
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
+        return query.getResultList();
     }
 
 }
