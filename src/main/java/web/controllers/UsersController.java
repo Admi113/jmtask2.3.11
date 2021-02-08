@@ -15,12 +15,14 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
-    UserServiceImpl userService;
 
     @Autowired
-    public UsersController(UserServiceImpl userService) {
-        this.userService = userService;
-    }
+    UserService userService;
+
+
+//    public UsersController(UserServiceImpl userService) {
+//        this.userService = userService;
+//    }
 
     @GetMapping()
     public String index(Model model) {

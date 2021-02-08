@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import web.models.User;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -14,11 +15,20 @@ import java.util.List;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
+
+    private EntityManagerFactory entityManagerFactory;
+
+    private EntityManager em;
+
     @Autowired
-    EntityManagerFactory entityManagerFactory;
+    public UserDAOImpl(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
 
-    EntityManager em;
-
+    @PostConstruct
+    public void init() {
+        em=entityManagerFactory.createEntityManager();
+    }
 
     @Override
     public void save(User u) {
@@ -44,25 +54,15 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getById(int id) {
-        return (User) em.find(User.class, id);
+        return  em.find(User.class, id);
     }
 
     @Override
     public List<User> getAllUsers() {
-
-//        String sql = " FROM users_new";
-//        Query query = em.createQuery(sql);
-//
-//
-//        return em.createQuery("SELECT * FROM users_new").getResultList();
-
-       List<User> users = new ArrayList<>();
-        users.add(new User("name", "surname", 1,1));
-        users.add(new User("name", "surname", 3,2));
-        users.add(new User("name", "surname", 4,3));
-        users.add(new User("name", "surname", 5,4));
-       return users;
+        Query q = em.createQuery("from User e", User.class);
+        return q.getResultList();
     }
+
 
 }
 
