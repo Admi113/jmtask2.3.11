@@ -16,12 +16,15 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UsersController {
 
-    @Autowired
+
     UserService userService;
 
+    @Autowired
+    public UsersController(UserService userService) {
+        this.userService = userService;
+    }
 
-
-    @GetMapping()
+    @GetMapping
     public String index(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users/index";

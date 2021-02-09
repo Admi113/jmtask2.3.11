@@ -18,9 +18,6 @@ import java.util.List;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-    private EntityManagerFactory entityManagerFactory;
-
-
     @PersistenceContext
     private EntityManager em;
 
