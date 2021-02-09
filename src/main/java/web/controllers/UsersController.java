@@ -5,10 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import web.dao.UserDAOImpl;
+
 import web.models.User;
 import web.service.UserService;
-import web.service.UserServiceImpl;
+
 
 import javax.validation.Valid;
 
@@ -20,16 +20,12 @@ public class UsersController {
     UserService userService;
 
 
-//    public UsersController(UserServiceImpl userService) {
-//        this.userService = userService;
-//    }
 
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users/index";
     }
-
 
 
     @GetMapping("/{id}")
@@ -63,9 +59,9 @@ public class UsersController {
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user")
-                         @Valid User user,BindingResult result
+                         @Valid User user, BindingResult result
             , @PathVariable("id") int id) {
-        if(result.hasErrors())
+        if (result.hasErrors())
             return "users/edit";
 
         userService.update(user, id);
