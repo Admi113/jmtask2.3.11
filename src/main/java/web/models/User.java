@@ -1,6 +1,10 @@
 package web.models;
 
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -9,9 +13,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users")
+@Table(name = "userz")
 
-public class User {
+public class User  {
     @Column(name = "name")
     @NotEmpty(message = "shoudnt be empty")
     @Size(min = 2, max = 30, message = "2> Name size >30")
@@ -31,6 +35,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public User() {
     }
@@ -82,4 +96,6 @@ public class User {
                 ", age=" + age +
                 '}';
     }
+
+
 }

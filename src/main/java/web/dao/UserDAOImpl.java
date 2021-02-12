@@ -37,6 +37,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
+
+
+    @Override
+    public User getUserByName(String name) {
+//        Query q = em.createQuery("from User where name =: name", User.class);
+        Query q = em.createQuery("from User where name =: name");
+        q.setParameter("name",name);
+        return (User) q.getSingleResult();
+    }
+
     @Override
     public void delete(int id) {
         User user = getById(id);

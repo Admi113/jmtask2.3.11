@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import web.models.User;
-import web.service.UserService;
+import web.service.UserServicee;
 
 
 import javax.validation.Valid;
@@ -17,23 +17,23 @@ import javax.validation.Valid;
 public class UsersController {
 
 
-    UserService userService;
+    UserServicee userServicee;
 
     @Autowired
-    public UsersController(UserService userService) {
-        this.userService = userService;
+    public UsersController(UserServicee userServicee) {
+        this.userServicee = userServicee;
     }
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("users", userServicee.getAllUsers());
         return "users/index";
     }
 
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.getById(id));
+        model.addAttribute("user", userServicee.getById(id));
         return "users/show";
     }
 
@@ -49,14 +49,14 @@ public class UsersController {
         if (result.hasErrors())
             return "users/new";
 
-        userService.save(user);
+        userServicee.save(user);
         return "redirect:/users";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model
             , @PathVariable("id") int id) {
-        model.addAttribute("user1", userService.getById(id));
+        model.addAttribute("user1", userServicee.getById(id));
         return "users/edit";
     }
 
@@ -67,13 +67,13 @@ public class UsersController {
         if (result.hasErrors())
             return "users/edit";
 
-        userService.update(user, id);
+        userServicee.update(user, id);
         return "redirect:/users";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        userService.delete(id);
+        userServicee.delete(id);
         return "redirect:/users";
     }
 
