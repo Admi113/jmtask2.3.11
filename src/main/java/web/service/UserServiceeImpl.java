@@ -62,6 +62,6 @@ public class UserServiceeImpl implements UserServicee, UserDetailsService {
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         User user = getUserByName(name);
 
-        return null;
+        return user;
     }
 }
