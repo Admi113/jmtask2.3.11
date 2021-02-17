@@ -3,6 +3,7 @@ package web.dao;
 import com.mysql.cj.xdevapi.SessionFactory;
 import web.models.User;
 
+
 import java.util.List;
 
 public interface UserDAO {

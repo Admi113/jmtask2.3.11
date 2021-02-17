@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import web.models.User;
 import web.service.UserServicee;
+import web.service.UserServiceeImpl;
 
 
 import javax.validation.Valid;
@@ -92,7 +93,7 @@ public class  UsersController {
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
-        return "login";
+        return "users/login";
     }
 
 
