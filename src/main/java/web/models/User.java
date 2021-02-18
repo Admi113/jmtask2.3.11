@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "userz")
@@ -43,12 +44,12 @@ public class User implements UserDetails  {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "userz_roles"
             ,joinColumns = @JoinColumn(name = "userz_id")
             ,inverseJoinColumns = @JoinColumn(name = "roles_id")
     )
-    private List<Role> roles;
+    private Set<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -66,22 +67,22 @@ public class User implements UserDetails  {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
 
@@ -140,11 +141,11 @@ public class User implements UserDetails  {
                 '}';
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public Set<Role> getRoles() {
+        return roles;
     }
 }

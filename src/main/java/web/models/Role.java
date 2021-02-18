@@ -1,6 +1,7 @@
 package web.models;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "roles")
-public class Role implements GrantedAuthority {
+public class Role
+        implements GrantedAuthority
+{
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY);
