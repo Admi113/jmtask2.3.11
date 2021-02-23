@@ -38,6 +38,8 @@ public class  UsersController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userServicee.getById(id));
+        model.addAttribute("roles",userServicee.getById(id).getRoles());
+
         return "users/show";
     }
 

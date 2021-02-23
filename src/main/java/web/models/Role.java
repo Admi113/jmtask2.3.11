@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -23,13 +24,13 @@ public class Role
 
     public Role() {
     }
-
+    @Transient
     @ManyToMany
     @JoinTable(name = "userz_roles"
             ,joinColumns =@JoinColumn(name = "roles_id")
             ,inverseJoinColumns = @JoinColumn(name = "userz_id")
     )
-    private List<User> users;
+    private Set<User> users;
 
     public Role(Long id, String role) {
         this.id = id;
@@ -57,11 +58,16 @@ public class Role
         return role;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return role ;
     }
 }

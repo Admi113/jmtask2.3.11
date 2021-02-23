@@ -12,6 +12,16 @@
     <p th:text="${user.getName()}">VALUE</p>
     <p th:text="${user.getSurname()}">VALUE</p>
 
+    <br/>
+
+    <div th:each ="role :${roles}">
+<!--        <a th:href="@{/users/{id}(id= ${user.getId()})}"-->
+<!--           th:text="${user}">user</a>-->
+        <p th:text="${role}"></p>
+
+    </div>
+
+    <br/>
     <a th:href="@{/users/{id}/edit(id = ${user.getId()})}">Edit</a>
 </div>
 

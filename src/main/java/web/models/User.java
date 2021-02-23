@@ -6,15 +6,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import javax.management.relation.RoleStatus;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "userz")
@@ -145,7 +144,20 @@ public class User implements UserDetails  {
         this.roles = roles;
     }
 
-    public Set<Role> getRoles() {
+
+    public void setRoles(List<Role> roles) {
+        this.roles = new HashSet<Role>(roles);
+    }
+
+
+
+    public Set<Role> getsRoles() {
         return roles;
+    }
+    public List<Role> getRoles(){
+        List<Role> roleList = new ArrayList<>();
+        roleList.addAll(getsRoles());
+
+        return roleList;
     }
 }

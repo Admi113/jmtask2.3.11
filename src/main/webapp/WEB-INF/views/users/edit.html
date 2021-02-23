@@ -38,6 +38,15 @@
 <!--         th:errors="*{age}"> Error-->
 <!--    </div>-->
     <br/>
+
+    <ul class="checkbox-list">
+        <li th:each = "role: ${user.roles}">
+            <input type = "checkbox"
+                   th:value="role" th:field ="*{roles}"  />
+
+        </li>
+    </ul>
+
     <input type="submit" value="Update!"/>
 </form>
 
