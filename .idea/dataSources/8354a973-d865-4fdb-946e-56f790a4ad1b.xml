@@ -1043,25 +1043,20 @@ SELECT|sys.sys_config
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="318" parent="292" name="user_UNIQUE">
-      <ColNames>userz_id</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="319" parent="292" name="role_fk_idx">
+    <index id="318" parent="292" name="role_fk_idx">
       <ColNames>roles_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="320" parent="292" name="user_UNIQUE">
+    <index id="319" parent="292" name="user_id_fk">
       <ColNames>userz_id</ColNames>
-      <UnderlyingIndexName>user_UNIQUE</UnderlyingIndexName>
-    </key>
-    <foreign-key id="321" parent="292" name="role_id_fk">
+      <Type>btree</Type>
+    </index>
+    <foreign-key id="320" parent="292" name="role_id_fk">
       <ColNames>roles_id</ColNames>
       <RefTableName>roles</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="322" parent="292" name="user_id_fk">
+    <foreign-key id="321" parent="292" name="user_id_fk">
       <ColNames>userz_id</ColNames>
       <RefTableName>userz</RefTableName>
       <RefColNames>id</RefColNames>

@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import web.models.User;
+import web.service.RoleService;
 import web.service.UserServicee;
 import web.service.UserServiceeImpl;
 
@@ -18,13 +19,16 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/users")
-public class  UsersController {
+public class UsersController {
 
-
+    RoleService roleService;
     UserServicee userServicee;
 
+
+
     @Autowired
-    public UsersController(UserServicee userServicee) {
+    public UsersController(RoleService roleService, UserServicee userServicee) {
+        this.roleService = roleService;
         this.userServicee = userServicee;
     }
 
@@ -38,7 +42,7 @@ public class  UsersController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userServicee.getById(id));
-        model.addAttribute("roles",userServicee.getById(id).getRoles());
+        model.addAttribute("roles", userServicee.getById(id).getRoles());
 
         return "users/show";
     }
@@ -62,7 +66,9 @@ public class  UsersController {
     @GetMapping("/{id}/edit")
     public String edit(Model model
             , @PathVariable("id") int id) {
-        model.addAttribute("user1", userServicee.getById(id));
+        model.addAttribute("userById", userServicee.getById(id));
+        model.addAttribute("rolesList", roleService.getAllRoles());
+
         return "users/edit";
     }
 
@@ -97,7 +103,6 @@ public class  UsersController {
     public String loginPage() {
         return "users/login";
     }
-
 
 
 }

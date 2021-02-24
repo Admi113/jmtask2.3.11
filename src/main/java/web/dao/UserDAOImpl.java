@@ -34,6 +34,7 @@ public class UserDAOImpl implements UserDAO {
         user1.setName(user.getName());
         user1.setSurname(user.getSurname());
         user1.setAge(user.getAge());
+        user1.setRoles(user.getRoles());
         Session session =em.unwrap(Session.class);
         session.saveOrUpdate(user1);
     }
