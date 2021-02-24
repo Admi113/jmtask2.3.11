@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import web.models.User;
 import web.service.RoleService;
 import web.service.UserServicee;
-import web.service.UserServiceeImpl;
 
 
 import javax.validation.Valid;
@@ -23,7 +22,6 @@ public class UsersController {
 
     RoleService roleService;
     UserServicee userServicee;
-
 
 
     @Autowired
@@ -42,23 +40,29 @@ public class UsersController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userServicee.getById(id));
-        model.addAttribute("roles", userServicee.getById(id).getRoles());
+        model.addAttribute("roles", userServicee.getById(id).getRolesList());
 
         return "users/show";
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
-
+    public String newUser(@ModelAttribute("user") User user
+            , Model model) {
+        model.addAttribute("roles", roleService.getAllRoles());
         return "users/new";
     }
 
     @PostMapping
     public String createUser(@ModelAttribute("user")
-                             @Valid User user, BindingResult result) {
+                             @Valid User user
+
+            , BindingResult result
+            , @RequestParam("select_role") Long[] roles) {
         if (result.hasErrors())
             return "users/new";
-
+        for (Long role : roles) {
+            user.addRole(roleService.getById(role));
+        }
         userServicee.save(user);
         return "redirect:/users";
     }
@@ -75,10 +79,12 @@ public class UsersController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user")
                          @Valid User user, BindingResult result
-            , @PathVariable("id") int id) {
+            , @PathVariable("id") int id, @RequestParam("select_role") Long[] roles) {
         if (result.hasErrors())
             return "users/edit";
-
+        for (Long role : roles) {
+            user.addRole(roleService.getById(role));
+        }
         userServicee.update(user, id);
         return "redirect:/users";
     }

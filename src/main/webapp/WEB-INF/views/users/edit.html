@@ -25,42 +25,58 @@
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <div style="color: red" th:if="${#fields.hasErrors('name')}"
-         th:errors="*{name}"> Error</div>
+         th:errors="*{name}"> Error
+    </div>
     <br/>
     <label for="surname1">Surname</label>
     <input type="text" th:field="*{surname}" id="surname1"/>
     <div style="color: red" th:if="${#fields.hasErrors('surname')}"
-         th:errors="*{surname}"> Error</div>
+         th:errors="*{surname}"> Error
+    </div>
     <br/>
     <label for="age1">Age</label>
     <input type="text" th:field="*{age}" id="age1"/>
-<!--    <div style="color: red" th:if="${#fields.hasErrors('age')}"-->
-<!--         th:errors="*{age}"> Error-->
-<!--    </div>-->
+    <!--    <div style="color: red" th:if="${#fields.hasErrors('age')}"-->
+    <!--         th:errors="*{age}"> Error-->
+    <!--    </div>-->
     <br/>
 
-<!--    <ul class="checkbox-list">-->
-<!--        <li th:each = "role: ${rolesList}">-->
-<!--            <input type = "checkbox"-->
-<!--                   th:value="role" th:field ="*{roles}"  />-->
-<!--            <label th:text="${role.role}">example</label>-->
+    <!--    <ul class="checkbox-list">-->
+    <!--        <li th:each = "role: ${rolesList}">-->
+    <!--            <input type = "checkbox"-->
+    <!--                   th:value="role" th:field ="*{roles}"  />-->
+    <!--            <label th:text="${role.role}">example</label>-->
 
-<!--        </li>-->
-<!--    </ul>-->
-
-    <select th:field ="${userById.roles}">
-        <option th:each="role: ${rolesList}">
-            th:value="${role}"
-            th:text="${role}"example</option>
-    </select>
-
-<!--    "<select id="editRoles" name="roles" multiple size="2" required '-->
-<!--    'class="form-control form-control-sm">'-->
-<!--    '<option value="ADMIN"'   adminSelect   '>ADMIN</option>'-->
-<!--    '<option value="USER"'   userSelect   '>USER</option>'-->
-<!--    '</select>'"-->
+    <!--        </li>-->
+    <!--    </ul>-->
 
 
+    <!--    <div >-->
+    <br/>
+    <label>
+        <p>Select Roles(Multiple):
+            <br/>
+            <select name="select_role" multiple="multiple">
+                <option th:each="role: ${rolesList}"
+                        th:value="${role.id}" th:text="${role.getAuthority()}">
+            </select>
+        </p>
+    </label>
+    <!--                <input type="submit" value="submit"/>-->
+    <!--    </div>-->
+
+
+    <!--    <select th:field ="${userById.roles}">-->
+    <!--        <option th:each="role: ${rolesList}">-->
+    <!--            th:value="${role}"-->
+    <!--            th:text="${role}"example</option>-->
+    <!--    </select>-->
+
+    <!--    "<select id="editRoles" name="roles" multiple size="2" required '-->
+    <!--    'class="form-control form-control-sm">'-->
+    <!--    '<option value="ADMIN"'   adminSelect   '>ADMIN</option>'-->
+    <!--    '<option value="USER"'   userSelect   '>USER</option>'-->
+    <!--    '</select>'"-->
 
 
     <input type="submit" value="Update!"/>

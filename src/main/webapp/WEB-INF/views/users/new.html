@@ -22,7 +22,16 @@
 <!--    <div style="color: red"  th:if="${#fields.hasErrors('age')}"-->
 <!--         th:errors="*{age}"  > Error  </div>-->
 
-
+    <br/>
+    <label>
+        <p>Select Roles(Multiple):
+            <br/>
+            <select name="select_role" multiple="multiple">
+                <option th:each="role: ${roles}"
+                        th:value="${role.id}" th:text="${role.getAuthority()}">
+            </select>
+        </p>
+    </label>
 
 
 

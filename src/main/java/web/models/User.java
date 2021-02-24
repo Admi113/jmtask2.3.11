@@ -48,7 +48,7 @@ public class User implements UserDetails  {
             ,joinColumns = @JoinColumn(name = "userz_id")
             ,inverseJoinColumns = @JoinColumn(name = "roles_id")
     )
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -151,13 +151,17 @@ public class User implements UserDetails  {
 
 
 
-    public Set<Role> getsRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
-    public List<Role> getRoles(){
+    public List<Role> getRolesList(){
         List<Role> roleList = new ArrayList<>();
-        roleList.addAll(getsRoles());
+        roleList.addAll(getRoles());
 
         return roleList;
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
     }
 }
