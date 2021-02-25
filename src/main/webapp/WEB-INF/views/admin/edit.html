@@ -20,7 +20,7 @@
 <!--    <input type="submit" value="Update"/>-->
 <!--</form>-->
 
-<form th:method="PATCH" th:action="@{/users/{id}(id=${userById.getId()})}"
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${userById.getId()})}"
       th:object="${userById}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
@@ -36,6 +36,13 @@
     <br/>
     <label for="age1">Age</label>
     <input type="text" th:field="*{age}" id="age1"/>
+    <!--    <div style="color: red" th:if="${#fields.hasErrors('age')}"-->
+    <!--         th:errors="*{age}"> Error-->
+    <!--    </div>-->
+    <br/>
+
+    <label for="password">Password</label>
+    <input type="password" th:field="*{password}" id="password"/>
     <!--    <div style="color: red" th:if="${#fields.hasErrors('age')}"-->
     <!--         th:errors="*{age}"> Error-->
     <!--    </div>-->

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -21,27 +22,40 @@ import web.service.UserServicee;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Override
+    //    @Override
 //    public void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
 //    }
-
+    private LoginSuccessHandler loginSuccessHandler;
     private UserDetailsService userService;
 
+
     @Autowired
-    public void setUserService(UserDetailsService userService) {
+    public SecurityConfig(LoginSuccessHandler loginSuccessHandler, UserDetailsService userService) {
+        this.loginSuccessHandler = loginSuccessHandler;
         this.userService = userService;
+    }
+
+//    public SecurityConfig(boolean disableDefaults, LoginSuccessHandler loginSuccessHandler, UserDetailsService userService) {
+//        super(disableDefaults);
+//        this.loginSuccessHandler = loginSuccessHandler;
+//        this.userService = userService;
+//    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()// указываем страницу с формой логина
-////                .loginPage("/users/login")
+//                .loginPage("/users/login")
 //                //указываем логику обработки при логине
-//                .successHandler(new LoginSuccessHandler())
+                .successHandler(loginSuccessHandler)
 //                // указываем action с формы логина
-//                .loginProcessingUrl("/login")
-//                // Указываем параметры логина и пароля с формы логина
+//                .loginProcessingUrl("/users/login")
+////                // Указываем параметры логина и пароля с формы логина
 //                .usernameParameter("j_username")
 //                .passwordParameter("j_password")
 //                // даем доступ к форме логина всем
@@ -64,7 +78,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //страницы аутентификаци доступна всем
                 .antMatchers("/login").anonymous()
                 // защищенные URL
-                .antMatchers("/users").access("hasAnyRole('ADMIN')").anyRequest().authenticated();
+                .antMatchers("/admin")
+                .access("hasAnyRole('ADMIN')")
+                .antMatchers("/users")
+                .access("hasAnyRole('ADMIN','USER')")
+                .anyRequest().authenticated();
     }
 
 
@@ -76,10 +94,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
+    //    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
+//    }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder(12);
     }
-
 
 }

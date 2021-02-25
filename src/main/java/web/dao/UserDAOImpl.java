@@ -4,6 +4,9 @@ package web.dao;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import web.models.User;
 
@@ -23,6 +26,10 @@ public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager em;
 
+//    PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
+    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
+
+
     @Override
     public void save(User u) {
         em.persist(u);
@@ -30,23 +37,27 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void update(User user, int id) {
-       User user1 = getById(id);
-        user1.setName(user.getName());
-        user1.setSurname(user.getSurname());
-        user1.setAge(user.getAge());
-        user1.setRoles(user.getRoles());
-        Session session =em.unwrap(Session.class);
-        session.saveOrUpdate(user1);
+        User userOld = getById(id);
+        userOld.setName(user.getName());
+        userOld.setSurname(user.getSurname());
+        userOld.setAge(user.getAge());
+        userOld.setRoles(user.getRoles());
+
+        String oldPass = userOld.getPassword();
+        String newPass = passwordEncoder.encode(user.getPassword());
+        if (!newPass.equals(oldPass)) {
+            userOld.setPassword(newPass);
+        }
+        Session session = em.unwrap(Session.class);
+        session.saveOrUpdate(userOld);
     }
-
-
 
 
     @Override
     public User getUserByName(String name) {
 //        Query q = em.createQuery("from User where name =: name", User.class);
         Query q = em.createQuery("from User where name =: name");
-        q.setParameter("name",name);
+        q.setParameter("name", name);
         return (User) q.getSingleResult();
     }
 
@@ -58,7 +69,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getById(int id) {
-        return  em.find(User.class, id);
+        return em.find(User.class, id);
     }
 
     @Override
@@ -66,7 +77,6 @@ public class UserDAOImpl implements UserDAO {
         Query q = em.createQuery("from User e", User.class);
         return q.getResultList();
     }
-
 
 
 }
