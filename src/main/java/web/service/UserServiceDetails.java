@@ -11,9 +11,10 @@ import web.models.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 @Service
-
+@Transactional
 public class UserServiceDetails implements UserDetailsService {
 
 //    private UserServicee userServicee;

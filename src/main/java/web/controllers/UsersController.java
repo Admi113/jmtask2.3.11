@@ -16,7 +16,7 @@ import web.service.UserServicee;
 public class UsersController {
 
 
-    UserServicee userServicee;
+    private UserServicee userServicee;
 
     @Autowired
     public UsersController(RoleService roleService, UserServicee userServicee) {
@@ -28,15 +28,10 @@ public class UsersController {
     public String showUserInfo(Model model, Authentication authentication) {
         String userName = authentication.getName();
         User user = userServicee.getUserByName(userName);
-        model.addAttribute("roles",user.getRolesList());
+        model.addAttribute("roles", user.getRolesList());
         model.addAttribute("user1", user);
         return "user/show";
     }
 
-//    @GetMapping("/logout")
-//    public String usersLogoutPage(){
-//        return "users_logout";
-//    }
-//
 
 }

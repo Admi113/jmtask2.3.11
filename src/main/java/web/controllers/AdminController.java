@@ -20,8 +20,8 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    RoleService roleService;
-    UserServicee userServicee;
+    private RoleService roleService;
+    private UserServicee userServicee;
 
 
     @Autowired
@@ -96,16 +96,10 @@ public class AdminController {
     }
 
 
-
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
         return "admin/login";
     }
 
-
-//    @GetMapping("/logout")
-//    public String adminLogoutPage(){
-//        return "admin_logout";
-//    }
 
 }

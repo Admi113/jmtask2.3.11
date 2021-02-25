@@ -17,12 +17,6 @@ import java.io.IOException;
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    RoleService roleService;
-
-    @Autowired
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
-    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
