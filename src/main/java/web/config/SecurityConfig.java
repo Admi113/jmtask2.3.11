@@ -1,6 +1,7 @@
 package web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.config.handler.LoginSuccessHandler;
 //import web.service.UserDetailsServiseImpl;
+import web.config.handler.LogoutSuccessHandlerr;
 import web.service.UserServicee;
 
 
@@ -28,12 +30,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
     private LoginSuccessHandler loginSuccessHandler;
     private UserDetailsService userService;
+    private LogoutSuccessHandlerr logoutSuccessHandlerr;
 
 
     @Autowired
-    public SecurityConfig(LoginSuccessHandler loginSuccessHandler, UserDetailsService userService) {
+    public SecurityConfig(LoginSuccessHandler loginSuccessHandler
+            , @Qualifier("userServiceDetails") UserDetailsService userService
+            ,LogoutSuccessHandlerr logoutSuccessHandlerr) {
         this.loginSuccessHandler = loginSuccessHandler;
         this.userService = userService;
+        this.logoutSuccessHandlerr =logoutSuccessHandlerr;
     }
 
 //    public SecurityConfig(boolean disableDefaults, LoginSuccessHandler loginSuccessHandler, UserDetailsService userService) {
@@ -53,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .loginPage("/users/login")
 //                //указываем логику обработки при логине
                 .successHandler(loginSuccessHandler)
+
 //                // указываем action с формы логина
 //                .loginProcessingUrl("/users/login")
 ////                // Указываем параметры логина и пароля с формы логина
@@ -61,15 +68,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                // даем доступ к форме логина всем
                 .permitAll();
 //
-//        http.logout()
-//                // разрешаем делать логаут всем
-//                .permitAll()
-//                // указываем URL логаута
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                // указываем URL при удачном логауте
+        http.logout()
+                // разрешаем делать логаут всем
+                .permitAll()
+                // указываем URL логаута
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                // указываем URL при удачном логауте
 //                .logoutSuccessUrl("/login?logout")
-//                //выклчаем кроссдоменную секьюрность (на этапе обучения неважна)
-//                .and().csrf().disable();
+                .logoutSuccessHandler(logoutSuccessHandlerr)
+                //выклчаем кроссдоменную секьюрность (на этапе обучения неважна)
+                .and().csrf().disable();
 
 
         http
@@ -78,9 +86,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //страницы аутентификаци доступна всем
                 .antMatchers("/login").anonymous()
                 // защищенные URL
-                .antMatchers("/admin")
+                .antMatchers("/admin/**")
                 .access("hasAnyRole('ADMIN')")
-                .antMatchers("/users")
+                .antMatchers("/users/**")
                 .access("hasAnyRole('ADMIN','USER')")
                 .anyRequest().authenticated();
     }

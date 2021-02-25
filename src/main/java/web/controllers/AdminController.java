@@ -18,14 +18,14 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminsController {
+public class AdminController {
 
     RoleService roleService;
     UserServicee userServicee;
 
 
     @Autowired
-    public AdminsController(RoleService roleService, UserServicee userServicee) {
+    public AdminController(RoleService roleService, UserServicee userServicee) {
         this.roleService = roleService;
         this.userServicee = userServicee;
     }
@@ -95,20 +95,17 @@ public class AdminsController {
         return "redirect:/admin";
     }
 
-//    @RequestMapping(value = "hello", method = RequestMethod.GET)
-//    public String printWelcome(ModelMap model) {
-//        List<String> messages = new ArrayList<>();
-//        messages.add("Hello!");
-//        messages.add("I'm Spring MVC-SECURITY application");
-//        messages.add("5.2.0 version by sep'19 ");
-//        model.addAttribute("messages", messages);
-//        return "users/hello";
-//    }
+
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String loginPage() {
         return "admin/login";
     }
 
+
+//    @GetMapping("/logout")
+//    public String adminLogoutPage(){
+//        return "admin_logout";
+//    }
 
 }

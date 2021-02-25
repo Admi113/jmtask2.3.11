@@ -26,9 +26,14 @@ public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager em;
 
-//    PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
+//    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void save(User u) {
@@ -44,9 +49,11 @@ public class UserDAOImpl implements UserDAO {
         userOld.setRoles(user.getRoles());
 
         String oldPass = userOld.getPassword();
-        String newPass = passwordEncoder.encode(user.getPassword());
-        if (!newPass.equals(oldPass)) {
-            userOld.setPassword(newPass);
+        String newPass = user.getPassword();
+//        if (!newPass.equals(oldPass))
+        if (!passwordEncoder.matches(newPass,oldPass))
+        {
+            userOld.setPassword(passwordEncoder.encode(newPass));
         }
         Session session = em.unwrap(Session.class);
         session.saveOrUpdate(userOld);

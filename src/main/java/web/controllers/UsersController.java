@@ -33,5 +33,10 @@ public class UsersController {
         return "user/show";
     }
 
+//    @GetMapping("/logout")
+//    public String usersLogoutPage(){
+//        return "users_logout";
+//    }
+//
 
 }
