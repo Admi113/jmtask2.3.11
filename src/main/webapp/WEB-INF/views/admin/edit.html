@@ -6,19 +6,7 @@
     <title>Edit</title>
 </head>
 <body>
-<!--<form th:method="PATCH" th:action="@{/users/{id}(id=${user1.getId})}"-->
-<!--      th:object="${user1}">-->
-<!--    <label for="name1">Name</label>-->
-<!--    <input type="text" th:field="*{name}" id="name1"/>-->
-<!--    <br>-->
-<!--    <label for="surname1">Surname</label>-->
-<!--    <input type="text" th:field="*{surname}" id="surname1"/>-->
-<!--    <br>-->
-<!--    <label for="age1">Age</label>-->
-<!--    <input type="number" th:field="*{age}" id="age1"/>-->
-<!--    <br>-->
-<!--    <input type="submit" value="Update"/>-->
-<!--</form>-->
+
 
 <form th:method="PATCH" th:action="@{/admin/{id}(id=${userById.getId()})}"
       th:object="${userById}">
@@ -36,29 +24,14 @@
     <br/>
     <label for="age1">Age</label>
     <input type="text" th:field="*{age}" id="age1"/>
-    <!--    <div style="color: red" th:if="${#fields.hasErrors('age')}"-->
-    <!--         th:errors="*{age}"> Error-->
-    <!--    </div>-->
+
     <br/>
 
     <label for="password">Password</label>
     <input type="password" th:field="*{password}" id="password"/>
-    <!--    <div style="color: red" th:if="${#fields.hasErrors('age')}"-->
-    <!--         th:errors="*{age}"> Error-->
-    <!--    </div>-->
+
     <br/>
 
-    <!--    <ul class="checkbox-list">-->
-    <!--        <li th:each = "role: ${rolesList}">-->
-    <!--            <input type = "checkbox"-->
-    <!--                   th:value="role" th:field ="*{roles}"  />-->
-    <!--            <label th:text="${role.role}">example</label>-->
-
-    <!--        </li>-->
-    <!--    </ul>-->
-
-
-    <!--    <div >-->
     <br/>
     <label>
         <p>Select Roles(Multiple):
@@ -69,21 +42,6 @@
             </select>
         </p>
     </label>
-    <!--                <input type="submit" value="submit"/>-->
-    <!--    </div>-->
-
-
-    <!--    <select th:field ="${userById.roles}">-->
-    <!--        <option th:each="role: ${rolesList}">-->
-    <!--            th:value="${role}"-->
-    <!--            th:text="${role}"example</option>-->
-    <!--    </select>-->
-
-    <!--    "<select id="editRoles" name="roles" multiple size="2" required '-->
-    <!--    'class="form-control form-control-sm">'-->
-    <!--    '<option value="ADMIN"'   adminSelect   '>ADMIN</option>'-->
-    <!--    '<option value="USER"'   userSelect   '>USER</option>'-->
-    <!--    '</select>'"-->
 
 
     <input type="submit" value="Update!"/>
