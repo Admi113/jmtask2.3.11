@@ -17,21 +17,15 @@ import javax.transaction.Transactional;
 @Transactional
 public class UserServiceDetails implements UserDetailsService {
 
-//    private UserServicee userServicee;
-//
-//    @Autowired
-//    public UserServiceDetails(UserServicee userServicee) {
-//        this.userServicee = userServicee;
-//    }
+    private UserDAO userDAO;
 
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    public UserServiceDetails(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     public User getUserByName(String name) {
-//        Query q = em.createQuery("from User where name =: name", User.class);
-        Query q = em.createQuery("from User where name =: name");
-        q.setParameter("name", name);
-        return (User) q.getSingleResult();
+        return userDAO.getUserByName(name);
     }
 
 

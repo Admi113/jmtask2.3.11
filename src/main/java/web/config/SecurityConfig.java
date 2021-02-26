@@ -30,16 +30,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
     private LoginSuccessHandler loginSuccessHandler;
     private UserDetailsService userService;
-    private LogoutSuccessHandlerr logoutSuccessHandlerr;
+//    private LogoutSuccessHandlerr logoutSuccessHandlerr;
 
 
     @Autowired
     public SecurityConfig(LoginSuccessHandler loginSuccessHandler
             , @Qualifier("userServiceDetails") UserDetailsService userService
-            ,LogoutSuccessHandlerr logoutSuccessHandlerr) {
+//            ,LogoutSuccessHandlerr logoutSuccessHandlerr
+    )
+    {
         this.loginSuccessHandler = loginSuccessHandler;
         this.userService = userService;
-        this.logoutSuccessHandlerr =logoutSuccessHandlerr;
+//        this.logoutSuccessHandlerr =logoutSuccessHandlerr;
     }
 
 //    public SecurityConfig(boolean disableDefaults, LoginSuccessHandler loginSuccessHandler, UserDetailsService userService) {
@@ -75,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 // указываем URL при удачном логауте
 //                .logoutSuccessUrl("/login?logout")
-                .logoutSuccessHandler(logoutSuccessHandlerr)
+//                .logoutSuccessHandler(logoutSuccessHandlerr)
                 //выклчаем кроссдоменную секьюрность (на этапе обучения неважна)
                 .and().csrf().disable();
 

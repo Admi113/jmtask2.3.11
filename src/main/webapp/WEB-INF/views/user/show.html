@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -14,7 +15,7 @@ Show User
 
     <br/>
 
-    <div th:each ="role :${roles}">
+    <div th:each="role :${roles}">
         <p th:text="${role}"></p>
 
     </div>
@@ -22,5 +23,12 @@ Show User
 
 </div>
 
+
+<br/>
+
+<p> Logout </p>
+<form name="logoutForm" th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>
